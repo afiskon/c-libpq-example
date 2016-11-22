@@ -52,8 +52,8 @@ main()
     printf("Version of libpq: %d\n", libpq_ver);
 
     conn = PQconnectdb(
-        "user=postgres password=secretpass "
-        "host=10.0.3.248 dbname=phonebook");
+        "user=eax password= "
+        "host=127.0.0.1 dbname=eax");
 
     if(PQstatus(conn) != CONNECTION_OK)
         terminate(1);
