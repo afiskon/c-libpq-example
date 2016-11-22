@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PRFX=
+PRFX=/home/eax/work/postgrespro/postgresql-install
 # PRFX=/usr/local/pgsql/
 
 gcc -std=c99 -I$PRFX/include/ -c libpq_example.c -o libpq_example.o
