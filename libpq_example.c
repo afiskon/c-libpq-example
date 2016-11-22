@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <libpq-fe.h>
 
+// (c) Aleksander Alekseev 2016 | http://eax.me/
+
 #define UNUSED(x) (void)(x)
 
 static const char* user_phone_arr[][2] = {
@@ -51,10 +53,7 @@ main()
     int libpq_ver = PQlibVersion();
     printf("Version of libpq: %d\n", libpq_ver);
 
-    conn = PQconnectdb(
-        "user=eax password= "
-        "host=127.0.0.1 dbname=eax");
-
+    conn = PQconnectdb("user=eax password= host=127.0.0.1 dbname=eax");
     if(PQstatus(conn) != CONNECTION_OK)
         terminate(1);
 
@@ -71,7 +70,6 @@ main()
     printf("User: %s\n", user);
     printf("Database name: %s\n", db_name);
 
-
     // same for insert, update, delete, begin, commit ...
     res = PQexec(conn, "CREATE TABLE IF NOT EXISTS phonebook "
             "(id SERIAL PRIMARY KEY, name VARCHAR(64), "
@@ -84,7 +82,6 @@ main()
     if(PQresultStatus(res) != PGRES_COMMAND_OK)
         terminate(1);
     clearRes();
-
 
     const char* query =
         "INSERT INTO phonebook (name, phone, last_changed) "
@@ -107,8 +104,8 @@ main()
         clearRes();
     }
 
-
-    res = PQexec(conn, "SELECT id, name, phone, last_changed FROM phonebook");
+    res = PQexec(conn, "SELECT id, name, phone, last_changed "
+                       "FROM phonebook");
     if(PQresultStatus(res) != PGRES_TUPLES_OK)
         terminate(1);
 
@@ -120,7 +117,6 @@ main()
         printf(" %s", name);
     }
     printf("\n");
-
 
     int nrows = PQntuples(res);
     for(int i = 0; i < nrows; i++)
